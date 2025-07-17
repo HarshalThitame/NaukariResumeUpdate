@@ -1,15 +1,11 @@
 package pageObject;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 
 public class EditProfilePage extends BasePage {
     @FindBy(xpath = "//input[@value='Update resume']")
@@ -44,25 +40,32 @@ public class EditProfilePage extends BasePage {
     }
 
 
-    public void uploadResume() throws InterruptedException {
+//    public void uploadResume() throws InterruptedException {
+//
+//        Thread.sleep(2000);
+//        StringSelection filePathSelection = new StringSelection("C:\\Users\\hthit\\IdeaProjects\\Naukari\\testData\\Harshal_Resume.pdf");
+//        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//        clipboard.setContents(filePathSelection, null);
+//        Thread.sleep(2000);
+//        try {
+//            Robot robot = new Robot();
+//            robot.keyPress(KeyEvent.VK_CONTROL);
+//            robot.keyPress(KeyEvent.VK_V);
+//            robot.keyRelease(KeyEvent.VK_V);
+//            robot.keyRelease(KeyEvent.VK_CONTROL);
+//            Thread.sleep(2000);
+//            robot.keyPress(KeyEvent.VK_ENTER);
+//            robot.keyRelease(KeyEvent.VK_ENTER);
+//        } catch (AWTException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 
-        Thread.sleep(2000);
-        StringSelection filePathSelection = new StringSelection("C:\\Users\\hthit\\IdeaProjects\\Naukari\\testData\\Harshal_Resume.pdf");
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(filePathSelection, null);
-        Thread.sleep(2000);
-        try {
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-            Thread.sleep(2000);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-        } catch (AWTException e) {
-            throw new RuntimeException(e);
-        }
+    public void uploadResume() {
+        // Example XPath or ID — update this based on actual hidden file input
+        WebElement fileInput = driver.findElement(By.xpath("//input[@type='file']"));
+        fileInput.sendKeys("/home/ubuntu/resume/Harshal_Resume.pdf");
 
     }
 
