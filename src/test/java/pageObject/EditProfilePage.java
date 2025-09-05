@@ -100,6 +100,7 @@ public class EditProfilePage extends BasePage {
     }
 
     public void updateProfileSummary() throws InterruptedException {
+        Thread.sleep(2000);
         wait.until(ExpectedConditions.visibilityOf(updateProfileSummaryButton)).click();
         Thread.sleep(2000);
         wait.until(ExpectedConditions.visibilityOf(saveProfileSummaryButton)).click();
