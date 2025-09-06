@@ -14,14 +14,14 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/your-repo/naukri-automation.git'
+                git branch: 'master',
+                    url: 'https://github.com/HarshalThitame/NaukariResumeUpdate.git'
             }
         }
 
         stage('Build & Test') {
             steps {
-                sh 'mvn clean test'
+                bat 'mvn clean test'
             }
         }
     }
