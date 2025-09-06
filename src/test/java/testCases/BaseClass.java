@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -42,7 +43,9 @@ public class BaseClass {
         switch (config.getProperty("browser")) {
             case "chrome":
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1080");
+                options.addArguments("--headless=new");   // new headless mode
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1920,1080");
                 driver = new ChromeDriver();
                 log.info("Chrome driver loaded successfully");
                 break;
@@ -59,7 +62,15 @@ public class BaseClass {
                 log.info("Safari driver loaded successfully");
                 break;
             case "edge":
+                System.setProperty("webdriver.edge.driver", "C:\\Users\\hthit\\Downloads\\edgedriver_win32\\msedgedriver.exe");
+
+
+                EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--headless=new");  // Enable new headless mode
+                edgeOptions.addArguments("--disable-gpu");
+                edgeOptions.addArguments("--window-size=1920,1080");
                 driver = new EdgeDriver();
+
                 log.info("Edge driver loaded successfully");
                 break;
             default:

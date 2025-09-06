@@ -20,7 +20,7 @@ public class TC0001_LoginTest extends BaseClass {
         EditProfilePage editProfilePage = homePage.gotoEditProfilePage();
 
 
-        editProfilePage.clickUpdateButton();
+//        editProfilePage.clickUpdateButton();
         editProfilePage.uploadResume();
 
         try {
@@ -35,7 +35,7 @@ public class TC0001_LoginTest extends BaseClass {
 //        update Profile
         editProfilePage.updateProfile();
         editProfilePage.updateSkills();
-        editProfilePage.updateProfileSummary();
+//        editProfilePage.updateProfileSummary();
 
         try {
             Thread.sleep(3000);

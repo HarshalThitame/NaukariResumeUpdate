@@ -1,15 +1,12 @@
 package pageObject;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 
 public class EditProfilePage extends BasePage {
     @FindBy(xpath = "//input[@value='Update resume']")
@@ -46,23 +43,28 @@ public class EditProfilePage extends BasePage {
 
     public void uploadResume() throws InterruptedException {
 
-        Thread.sleep(2000);
-        StringSelection filePathSelection = new StringSelection("C:\\Users\\hthit\\IdeaProjects\\Naukari\\testData\\Harshal_Resume.pdf");
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(filePathSelection, null);
-        Thread.sleep(2000);
-        try {
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-            Thread.sleep(2000);
-            robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
-        } catch (AWTException e) {
-            throw new RuntimeException(e);
-        }
+//        Thread.sleep(2000);
+//        StringSelection filePathSelection = new StringSelection("C:\\Users\\hthit\\IdeaProjects\\Naukari\\testData\\Harshal_Resume.pdf");
+//        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//        clipboard.setContents(filePathSelection, null);
+//        Thread.sleep(2000);
+//        try {
+//            Robot robot = new Robot();
+//            robot.keyPress(KeyEvent.VK_CONTROL);
+//            robot.keyPress(KeyEvent.VK_V);
+//            robot.keyRelease(KeyEvent.VK_V);
+//            robot.keyRelease(KeyEvent.VK_CONTROL);
+//            Thread.sleep(2000);
+//            robot.keyPress(KeyEvent.VK_ENTER);
+//            robot.keyRelease(KeyEvent.VK_ENTER);
+//        } catch (AWTException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        WebElement uploadInput = driver.findElement(By.id("attachCV"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].style.display='block';", uploadInput);
+        uploadInput.sendKeys(System.getProperty("user.dir") + "/testData/Harshal_Resume.pdf");
+//        driver.findElement(By.cssSelector("input.dummyUpload")).click();
 
     }
 
@@ -100,10 +102,11 @@ public class EditProfilePage extends BasePage {
     }
 
     public void updateProfileSummary() throws InterruptedException {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(updateProfileSummaryButton).click().perform();
+//        wait.until(ExpectedConditions.elementToBeClickable(updateProfileSummaryButton)).click();
         Thread.sleep(2000);
-        wait.until(ExpectedConditions.visibilityOf(updateProfileSummaryButton)).click();
-        Thread.sleep(2000);
-        wait.until(ExpectedConditions.visibilityOf(saveProfileSummaryButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(saveProfileSummaryButton)).click();
         Thread.sleep(2000);
     }
 }

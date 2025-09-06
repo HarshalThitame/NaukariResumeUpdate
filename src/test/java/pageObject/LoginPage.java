@@ -1,10 +1,14 @@
 package pageObject;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage extends BasePage {
 
@@ -19,8 +23,10 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void fillUsername(String username) {
-        this.username.sendKeys(username);
+    public void fillUsername(String u) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='usernameField']")));
+        username.sendKeys(u);
     }
 
     public void fillPassword(String password) {
