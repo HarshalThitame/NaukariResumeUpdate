@@ -1,72 +1,37 @@
 pipeline {
-  agent any
+    agent any
 
-  triggers {
-    // Run every hour, hashed minute
-    cron('H * * * *')
-  }
 
-  environment {
-    // Pass any global env if you want
-    MAVEN_OPTS = '-Dmaven.repo.local=.m2'
-  }
-
-  options {
-    // Keep logs reasonable
-    timestamps()
-    ansiColor('xterm')
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    environment {
+        BROWSER = "edge"      // can switch to chrome/firefox if needed
     }
 
-    stage('Build Docker Image') {
-      steps {
-        script {
-          // Build image from Dockerfile in repo
-          dockerImage = docker.build("naukri-automation-edge:${env.BUILD_NUMBER}")
-        }
-      }
+    triggers {
+        // Run daily at 9 AM
+        cron('0 9 * * *')
     }
 
-    stage('Run Tests (Edge headless in Docker)') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'NAUKRI_LOGIN',
-                                          usernameVariable: 'NAUKRI_USER',
-                                          passwordVariable: 'NAUKRI_PASS')]) {
-          script {
-            // Mount resume dir and run tests with needed system properties
-            dockerImage.inside("-v /var/lib/jenkins/resume:/data/resume") {
-              sh """
-                mvn -q test \
-                  -Dbrowser=edge \
-                  -Dheadless=true \
-                  -Dnaukri.username=${NAUKRI_USER} \
-                  -Dnaukri.password=${NAUKRI_PASS} \
-                  -DresumePath=/data/resume/HarshalThitameResume.pdf
-              """
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/your-repo/naukri-automation.git'
             }
-          }
         }
-      }
-    }
-  }
 
-  post {
-    always {
-      // Collect test reports & any debug artifacts your tests generate
-      junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
-      archiveArtifacts allowEmptyArchive: true, artifacts: 'headless-debug*.png,headless-debug*.html'
+        stage('Build & Test') {
+            steps {
+                sh 'mvn clean test'
+            }
+        }
     }
-    success {
-      echo '✅ Hourly Naukri update ran successfully.'
+
+    post {
+        success {
+            echo '✅ Naukri profile updated successfully!'
+        }
+        failure {
+            echo '❌ Naukri update failed. Check logs in Jenkins.'
+        }
     }
-    failure {
-      echo '❌ Build failed — check console log and artifacts.'
-    }
-  }
 }
