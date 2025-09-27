@@ -18,18 +18,18 @@ public class EditProfilePage extends BasePage {
     @FindBy(xpath = "//button[normalize-space()='Save']")
     private WebElement updateResumeHeadingSaveButton;
 
-    @FindBy(xpath = "//em[contains(@class,'icon edit')]")
+    @FindBy(css = "h1.user-name span.new-pencil")
     private WebElement updateProfileButton;
-    @FindBy(xpath = "//button[@id='saveBasicDetailsBtn']")
+    @FindBy(css = "#submit-btn")
     private WebElement saveProfileButton;
-    @FindBy(xpath = "//div[@class='widgetHead typ-16Bold']//span[@class='edit icon'][normalize-space()='editOneTheme']")
+    @FindBy(xpath = "//h1[text()='Key skills']//span")
     private WebElement updateSkillsButton;
-    @FindBy(xpath = "//button[@id='saveKeySkills']")
+    @FindBy(css = "#submit-btn")
     private WebElement saveSkillsButton;
-    @FindBy(xpath = "//div[@class='profileSummary']//div[@class='card']//div//span[@class='edit icon'][normalize-space()='editOneTheme']")
+    @FindBy(xpath = "//h1[text()='Profile Summary']//span")
     private WebElement updateProfileSummaryButton;
 
-    @FindBy(xpath = "//button[normalize-space()='Save']")
+    @FindBy(css = "#submit-btn")
     private WebElement saveProfileSummaryButton;
 
     public EditProfilePage(WebDriver driver) {
@@ -61,9 +61,9 @@ public class EditProfilePage extends BasePage {
 //            throw new RuntimeException(e);
 //        }
 
-        WebElement uploadInput = driver.findElement(By.id("attachCV"));
+        WebElement uploadInput = driver.findElement(By.id("undefined-err-inp"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].style.display='block';", uploadInput);
-        uploadInput.sendKeys(System.getProperty("user.dir") + "/testData/Harshal_Resume.pdf");
+        uploadInput.sendKeys(System.getProperty("user.dir") + "/testData/Rutik-Resume.pdf");
 //        driver.findElement(By.cssSelector("input.dummyUpload")).click();
 
     }

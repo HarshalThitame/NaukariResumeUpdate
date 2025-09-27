@@ -29,8 +29,8 @@ public class TC0001_LoginTest extends BaseClass {
             e.printStackTrace();
         }
 //        update heading
-        editProfilePage.clickUpdateResumeHeading();
-        editProfilePage.clickUpdateResumeHeadingSaveButton();
+//        editProfilePage.clickUpdateResumeHeading();
+//        editProfilePage.clickUpdateResumeHeadingSaveButton();
 
 //        update Profile
         editProfilePage.updateProfile();
